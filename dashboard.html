@@ -23,8 +23,15 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    #grafico-container {
+      max-width: 400px;
+      margin: 30px auto 0 auto;
     }
   </style>
+  <!-- CDN do Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -42,6 +49,10 @@
       <li>🟢 Item 4.1 - Licitações ✅</li>
       <li>🔴 Item 5.2 - Respostas e-SIC ❌</li>
     </ul>
+
+    <div id="grafico-container">
+      <canvas id="graficoPizza"></canvas>
+    </div>
   </div>
 
   <script>
@@ -61,6 +72,28 @@
       // Simula resultado aleatório
       const percentual = Math.floor(Math.random() * 30 + 70);
       document.getElementById('percentual').innerText = percentual;
+
+      // Configurar gráfico de pizza para conformidade x não conformidade
+      const ctx = document.getElementById('graficoPizza').getContext('2d');
+      const grafico = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Conformidade', 'Não Conformidade'],
+          datasets: [{
+            data: [percentual, 100 - percentual],
+            backgroundColor: ['#4CAF50', '#F44336'], // verde e vermelho
+            hoverOffset: 20
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
     }
 
     window.onload = iniciarAnalise;
