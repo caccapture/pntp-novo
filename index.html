@@ -3,42 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificador PNTP por Dimensão</title>
+  <title>Verificador PNTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
       background-color: #f1f4f9;
-      padding: 0 20px;
+      color: #333;
     }
     header {
       background-color: #004aad;
       color: white;
-      padding: 30px 20px;
+      padding: 40px 20px;
       text-align: center;
     }
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.4rem;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
     main {
       max-width: 800px;
       margin: 40px auto;
       background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
     section {
       margin-bottom: 30px;
     }
     h2 {
-      margin-top: 0;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: #004aad;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
+      margin-bottom: 10px;
     }
     label {
       font-weight: 600;
@@ -47,7 +50,7 @@
     }
     textarea {
       width: 100%;
-      height: 100px;
+      height: 80px;
       padding: 10px;
       font-size: 0.95rem;
       border: 1px solid #ccc;
@@ -57,13 +60,14 @@
     button {
       background-color: #004aad;
       color: white;
-      padding: 12px 20px;
+      padding: 14px;
       font-size: 1rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 20px;
       width: 100%;
-      margin-top: 30px;
+      transition: background 0.3s;
     }
     button:hover {
       background-color: #00337a;
@@ -72,63 +76,68 @@
 </head>
 <body>
 
-  <header>
-    <h1>Verificador PNTP</h1>
-    <p>Informe os links de cada dimensão do portal da transparência</p>
-  </header>
+<header>
+  <h1>Verificador PNTP</h1>
+  <p>Insira os links de cada dimensão do portal da transparência</p>
+</header>
 
-  <main>
-    <form id="dimensoes-form">
-      <section>
-        <h2>Informações Prioritárias</h2>
-        <label for="url-prioritarias">URLs (uma por linha):</label>
-        <textarea id="url-prioritarias"></textarea>
-      </section>
-      <section>
-        <h2>Informações Institucionais</h2>
-        <label for="url-institucionais">URLs (uma por linha):</label>
-        <textarea id="url-institucionais"></textarea>
-      </section>
-      <section>
-        <h2>Receitas</h2>
-        <label for="url-receitas">URLs (uma por linha):</label>
-        <textarea id="url-receitas"></textarea>
-      </section>
-      <section>
-        <h2>Despesas</h2>
-        <label for="url-despesas">URLs (uma por linha):</label>
-        <textarea id="url-despesas"></textarea>
-      </section>
-      <section>
-        <h2>Licitações</h2>
-        <label for="url-licitacoes">URLs (uma por linha):</label>
-        <textarea id="url-licitacoes"></textarea>
-      </section>
-      <section>
-        <h2>Contratos</h2>
-        <label for="url-contratos">URLs (uma por linha):</label>
-        <textarea id="url-contratos"></textarea>
-      </section>
-      <!-- Outras dimensões podem ser adicionadas da mesma forma -->
-      <button type="button" onclick="enviarAnalise()">Analisar</button>
-    </form>
-  </main>
+<main>
+  <form id="dimensoes-form">
+    <section>
+      <h2>Informações Prioritárias</h2>
+      <label for="prioritarias">URLs (uma por linha):</label>
+      <textarea id="prioritarias"></textarea>
+    </section>
 
-  <script>
-    function enviarAnalise() {
-      const dados = {
-        prioritarias: document.getElementById('url-prioritarias').value.trim().split('\n').filter(Boolean),
-        institucionais: document.getElementById('url-institucionais').value.trim().split('\n').filter(Boolean),
-        receitas: document.getElementById('url-receitas').value.trim().split('\n').filter(Boolean),
-        despesas: document.getElementById('url-despesas').value.trim().split('\n').filter(Boolean),
-        licitacoes: document.getElementById('url-licitacoes').value.trim().split('\n').filter(Boolean),
-        contratos: document.getElementById('url-contratos').value.trim().split('\n').filter(Boolean)
-      };
+    <section>
+      <h2>Informações Institucionais</h2>
+      <label for="institucionais">URLs (uma por linha):</label>
+      <textarea id="institucionais"></textarea>
+    </section>
 
-      const param = encodeURIComponent(JSON.stringify(dados));
-      window.location.href = `dashboard.html?dimensoes=${param}`;
-    }
-  </script>
+    <section>
+      <h2>Receitas</h2>
+      <label for="receitas">URLs (uma por linha):</label>
+      <textarea id="receitas"></textarea>
+    </section>
+
+    <section>
+      <h2>Despesas</h2>
+      <label for="despesas">URLs (uma por linha):</label>
+      <textarea id="despesas"></textarea>
+    </section>
+
+    <section>
+      <h2>Licitações</h2>
+      <label for="licitacoes">URLs (uma por linha):</label>
+      <textarea id="licitacoes"></textarea>
+    </section>
+
+    <section>
+      <h2>Contratos</h2>
+      <label for="contratos">URLs (uma por linha):</label>
+      <textarea id="contratos"></textarea>
+    </section>
+
+    <button type="button" onclick="enviarAnalise()">Analisar</button>
+  </form>
+</main>
+
+<script>
+  function enviarAnalise() {
+    const dados = {
+      prioritarias: document.getElementById('prioritarias').value.trim().split('\n').filter(Boolean),
+      institucionais: document.getElementById('institucionais').value.trim().split('\n').filter(Boolean),
+      receitas: document.getElementById('receitas').value.trim().split('\n').filter(Boolean),
+      despesas: document.getElementById('despesas').value.trim().split('\n').filter(Boolean),
+      licitacoes: document.getElementById('licitacoes').value.trim().split('\n').filter(Boolean),
+      contratos: document.getElementById('contratos').value.trim().split('\n').filter(Boolean)
+    };
+
+    const param = encodeURIComponent(JSON.stringify(dados));
+    window.location.href = `dashboard.html?dimensoes=${param}`;
+  }
+</script>
 
 </body>
 </html>
