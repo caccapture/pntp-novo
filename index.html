@@ -35,23 +35,16 @@
       border-radius: 16px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
-    section {
-      margin-bottom: 30px;
-    }
-    h2 {
-      font-size: 1.25rem;
-      color: #004aad;
-      margin-bottom: 10px;
-    }
     label {
       font-weight: 600;
       display: block;
       margin-bottom: 8px;
+      font-size: 1rem;
     }
     textarea {
       width: 100%;
-      height: 80px;
-      padding: 10px;
+      height: 150px;
+      padding: 12px;
       font-size: 0.95rem;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -60,7 +53,7 @@
     button {
       background-color: #004aad;
       color: white;
-      padding: 14px;
+      padding: 14px 20px;
       font-size: 1rem;
       border: none;
       border-radius: 8px;
@@ -72,72 +65,23 @@
     button:hover {
       background-color: #00337a;
     }
+    .info {
+      margin-top: 30px;
+      font-size: 0.95rem;
+      color: #666;
+    }
   </style>
 </head>
 <body>
 
 <header>
   <h1>Verificador PNTP</h1>
-  <p>Insira os links de cada dimensão do portal da transparência</p>
+  <p>Faça a análise de múltiplos links do portal da transparência</p>
 </header>
 
 <main>
-  <form id="dimensoes-form">
-    <section>
-      <h2>Informações Prioritárias</h2>
-      <label for="prioritarias">URLs (uma por linha):</label>
-      <textarea id="prioritarias"></textarea>
-    </section>
-
-    <section>
-      <h2>Informações Institucionais</h2>
-      <label for="institucionais">URLs (uma por linha):</label>
-      <textarea id="institucionais"></textarea>
-    </section>
-
-    <section>
-      <h2>Receitas</h2>
-      <label for="receitas">URLs (uma por linha):</label>
-      <textarea id="receitas"></textarea>
-    </section>
-
-    <section>
-      <h2>Despesas</h2>
-      <label for="despesas">URLs (uma por linha):</label>
-      <textarea id="despesas"></textarea>
-    </section>
-
-    <section>
-      <h2>Licitações</h2>
-      <label for="licitacoes">URLs (uma por linha):</label>
-      <textarea id="licitacoes"></textarea>
-    </section>
-
-    <section>
-      <h2>Contratos</h2>
-      <label for="contratos">URLs (uma por linha):</label>
-      <textarea id="contratos"></textarea>
-    </section>
-
-    <button type="button" onclick="enviarAnalise()">Analisar</button>
-  </form>
-</main>
-
-<script>
-  function enviarAnalise() {
-    const dados = {
-      prioritarias: document.getElementById('prioritarias').value.trim().split('\n').filter(Boolean),
-      institucionais: document.getElementById('institucionais').value.trim().split('\n').filter(Boolean),
-      receitas: document.getElementById('receitas').value.trim().split('\n').filter(Boolean),
-      despesas: document.getElementById('despesas').value.trim().split('\n').filter(Boolean),
-      licitacoes: document.getElementById('licitacoes').value.trim().split('\n').filter(Boolean),
-      contratos: document.getElementById('contratos').value.trim().split('\n').filter(Boolean)
-    };
-
-    const param = encodeURIComponent(JSON.stringify(dados));
-    window.location.href = `dashboard.html?dimensoes=${param}`;
-  }
-</script>
-
-</body>
-</html>
+  <label for="urls">Cole abaixo as URLs das páginas específicas do portal (uma por linha):</label>
+  <textarea id="urls" placeholder="https://transparencia.site.gov.br/receitas\nhttps://transparencia.site.gov.br/despesas\nhttps://transparencia.site.gov.br/contratos"></textarea>
+  <button onclick="analisarURLs()">Analisar Site</button>
+  <div class="info">
+    Exemplo: Cole os links para págin
