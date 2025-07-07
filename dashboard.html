@@ -25,14 +25,20 @@
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       max-width: 800px;
     }
+    .dimensao {
+      margin-top: 30px;
+    }
+    .dimensao h3 {
+      color: #004aad;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
     #grafico-container {
       max-width: 400px;
       margin: 30px auto 0 auto;
     }
     ul {
-      columns: 2;
-      -webkit-columns: 2;
-      -moz-columns: 2;
+      padding-left: 20px;
     }
     li {
       margin-bottom: 8px;
@@ -49,63 +55,85 @@
   <div id="resultado">
     <h2>Resultado da Análise</h2>
     <p><strong>Conformidade PNTP:</strong> <span id="percentual">--</span>%</p>
-    <ul id="criterios-lista">
-      <!-- Critérios serão inseridos aqui -->
-    </ul>
+    <div id="criterios-container"></div>
     <div id="grafico-container">
       <canvas id="graficoPizza"></canvas>
     </div>
   </div>
 
   <script>
-    const criteriosExecutivo = [
-      "1.1 Possui sítio oficial próprio na internet",
-      "1.2 Possui portal da transparência próprio ou compartilhado na internet",
-      "1.3 O acesso ao portal transparência está visível na capa do site",
-      "1.4 Ferramenta de pesquisa de conteúdo no site ou portal",
-      "2.1 Divulga a sua estrutura organizacional",
-      "2.2 Divulga competências e/ou atribuições",
-      "2.3 Identifica o nome dos atuais responsáveis",
-      "2.4 Divulga endereços, telefones e e-mails institucionais",
-      "2.5 Divulga o horário de atendimento",
-      "2.6 Divulga os atos normativos próprios",
-      "2.7 Divulga perguntas e respostas frequentes",
-      "3.1 Divulga receitas - previsão e realização",
-      "3.2 Classificação orçamentária da receita",
-      "3.3 Lista de inscritos em dívida ativa",
-      "4.1 Total de despesas empenhadas, liquidadas e pagas",
-      "4.2 Despesas por classificação orçamentária",
-      "4.3 Consulta detalhada de empenhos e credores",
-      "5.1 Transferências recebidas por convênios",
-      "5.2 Transferências realizadas por convênios",
-      "5.3 Acordos sem transferência financeira",
-      "6.1 Relação nominal de servidores, funções e lotações",
-      "6.2 Remuneração nominal e tabela salarial",
-      "6.5 Editais de concursos e seleções",
-      "6.6 Atos de concursos e nomeações",
-      "7.1 Informações completas sobre diárias",
-      "7.2 Tabela de valores das diárias",
-      "8.1 Relação das licitações e situação",
-      "8.2 Editais de licitação",
-      "9.1 Relação dos contratos e aditivos",
-      "9.2 Inteiro teor dos contratos",
-      "9.3 Lista de fiscais de contratos",
-      "10.1 Informações completas sobre obras públicas",
-      "10.2 Quantitativos e preços contratados",
-      "10.3 Quantitativos executados e valores pagos",
-      "11.1 Prestação de contas do ano anterior",
-      "11.2 Relatório de gestão ou atividades",
-      "11.5 Relatório de Gestão Fiscal (RGF)",
-      "11.6 Relatório Resumido de Execução Orçamentária (RREO)",
-      "11.8 PPA e seus anexos",
-      "11.9 LDO e seus anexos",
-      "11.10 LOA e seus anexos",
-      "12.1 SIC visível e unidade responsável",
-      "12.3 e-SIC funcional",
-      "12.7 Relatório estatístico de pedidos de acesso",
-      "12.8 Lista de documentos classificados",
-      "12.9 Lista de informações desclassificadas"
-    ];
+    const criteriosPorDimensao = {
+      "Informações Prioritárias": [
+        "1.1 Possui sítio oficial próprio na internet",
+        "1.2 Possui portal da transparência próprio ou compartilhado na internet",
+        "1.3 O acesso ao portal transparência está visível na capa do site",
+        "1.4 Ferramenta de pesquisa de conteúdo no site ou portal"
+      ],
+      "Informações Institucionais": [
+        "2.1 Divulga a sua estrutura organizacional",
+        "2.2 Divulga competências e/ou atribuições",
+        "2.3 Identifica o nome dos atuais responsáveis",
+        "2.4 Divulga endereços, telefones e e-mails institucionais",
+        "2.5 Divulga o horário de atendimento",
+        "2.6 Divulga os atos normativos próprios",
+        "2.7 Divulga perguntas e respostas frequentes"
+      ],
+      "Receitas": [
+        "3.1 Divulga receitas - previsão e realização",
+        "3.2 Classificação orçamentária da receita",
+        "3.3 Lista de inscritos em dívida ativa"
+      ],
+      "Despesas": [
+        "4.1 Total de despesas empenhadas, liquidadas e pagas",
+        "4.2 Despesas por classificação orçamentária",
+        "4.3 Consulta detalhada de empenhos e credores"
+      ],
+      "Transferências e Convênios": [
+        "5.1 Transferências recebidas por convênios",
+        "5.2 Transferências realizadas por convênios",
+        "5.3 Acordos sem transferência financeira"
+      ],
+      "Recursos Humanos": [
+        "6.1 Relação nominal de servidores, funções e lotações",
+        "6.2 Remuneração nominal e tabela salarial",
+        "6.5 Editais de concursos e seleções",
+        "6.6 Atos de concursos e nomeações"
+      ],
+      "Diárias": [
+        "7.1 Informações completas sobre diárias",
+        "7.2 Tabela de valores das diárias"
+      ],
+      "Licitações": [
+        "8.1 Relação das licitações e situação",
+        "8.2 Editais de licitação"
+      ],
+      "Contratos": [
+        "9.1 Relação dos contratos e aditivos",
+        "9.2 Inteiro teor dos contratos",
+        "9.3 Lista de fiscais de contratos"
+      ],
+      "Obras Públicas": [
+        "10.1 Informações completas sobre obras públicas",
+        "10.2 Quantitativos e preços contratados",
+        "10.3 Quantitativos executados e valores pagos"
+      ],
+      "Planejamento e Prestação de Contas": [
+        "11.1 Prestação de contas do ano anterior",
+        "11.2 Relatório de gestão ou atividades",
+        "11.5 Relatório de Gestão Fiscal (RGF)",
+        "11.6 Relatório Resumido de Execução Orçamentária (RREO)",
+        "11.8 PPA e seus anexos",
+        "11.9 LDO e seus anexos",
+        "11.10 LOA e seus anexos"
+      ],
+      "Acesso à Informação (SIC)": [
+        "12.1 SIC visível e unidade responsável",
+        "12.3 e-SIC funcional",
+        "12.7 Relatório estatístico de pedidos de acesso",
+        "12.8 Lista de documentos classificados",
+        "12.9 Lista de informações desclassificadas"
+      ]
+    };
 
     function getSiteParam() {
       const params = new URLSearchParams(window.location.search);
@@ -116,21 +144,35 @@
       const site = getSiteParam();
       document.getElementById('site-url').innerText = site || 'Nenhuma URL fornecida';
 
-      // Simular conformidade com base em critérios
-      const total = criteriosExecutivo.length;
-      const conformes = Math.floor(Math.random() * (total * 0.3) + (total * 0.6)); // 60% a 90%
+      const total = Object.values(criteriosPorDimensao).flat().length;
+      const conformes = Math.floor(Math.random() * (total * 0.3) + (total * 0.6));
       const percentual = Math.floor((conformes / total) * 100);
       document.getElementById('percentual').innerText = percentual;
 
-      const lista = document.getElementById('criterios-lista');
-      lista.innerHTML = '';
-      criteriosExecutivo.forEach((criterio, index) => {
-        const li = document.createElement('li');
-        li.innerText = `${criterio} ${index < conformes ? '✅' : '❌'}`;
-        lista.appendChild(li);
-      });
+      const container = document.getElementById('criterios-container');
+      container.innerHTML = '';
 
-      // Gráfico de pizza
+      let index = 0;
+      for (const [dimensao, criterios] of Object.entries(criteriosPorDimensao)) {
+        const sec = document.createElement('div');
+        sec.classList.add('dimensao');
+
+        const h3 = document.createElement('h3');
+        h3.innerText = dimensao;
+        sec.appendChild(h3);
+
+        const ul = document.createElement('ul');
+        criterios.forEach(criterio => {
+          const li = document.createElement('li');
+          li.textContent = `${criterio} ${index < conformes ? '✅' : '❌'}`;
+          ul.appendChild(li);
+          index++;
+        });
+
+        sec.appendChild(ul);
+        container.appendChild(sec);
+      }
+
       const ctx = document.getElementById('graficoPizza').getContext('2d');
       new Chart(ctx, {
         type: 'pie',
@@ -155,6 +197,5 @@
 
     window.onload = iniciarAnalise;
   </script>
-
 </body>
 </html>
