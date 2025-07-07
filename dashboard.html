@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard PNTP</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #004aad;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #004aad;
+      margin-bottom: 10px;
+    }
+    .status {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    canvas {
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      display: block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+      padding: 8px;
+      border-left: 5px solid #ccc;
+    }
+    .ok { border-color: green; }
+    .fail { border-color: red; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Dashboard - Verificação PNTP</h1>
+</header>
+
+<main>
+  <h2>Resultado para: transparencia.exemplo.gov.br</h2>
+  <p class="status"><strong>Conformidade PNTP:</strong> 76% - Nível Médio de Transparência</p>
+
+  <canvas id="grafico"></canvas>
+
+  <h2>Critérios Avaliados</h2>
+  <ul>
+    <li class="ok">✅ Item 1.1 - Publicação de receitas</li>
+    <li class="ok">✅ Item 1.2 - Execução da despesa</li>
+    <li class="fail">❌ Item 2.3 - Contratos</li>
+    <li class="ok">✅ Item 3.1 - Diárias e passagens</li>
+    <li class="fail">❌ Item 4.2 - Serviço de informação ao cidadão (e-SIC)</li>
+  </ul>
+</main>
+
+<script>
+  const ctx = document.getElementById('grafico');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Critérios atendidos', 'Critérios não atendidos'],
+      datasets: [{
+        label: 'Critérios',
+        data: [3, 2],
+        backgroundColor: ['#28a745', '#dc3545'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
