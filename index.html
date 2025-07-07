@@ -84,4 +84,21 @@
   <textarea id="urls" placeholder="https://transparencia.site.gov.br/receitas\nhttps://transparencia.site.gov.br/despesas\nhttps://transparencia.site.gov.br/contratos"></textarea>
   <button onclick="analisarURLs()">Analisar Site</button>
   <div class="info">
-    Exemplo: Cole os links para págin
+    Exemplo: Cole os links para páginas de receitas, despesas, servidores, contratos, licitações, etc.
+  </div>
+</main>
+
+<script>
+  function analisarURLs() {
+    const urls = document.getElementById('urls').value.trim().split('\n').filter(u => u.startsWith('http'));
+    if (urls.length === 0) {
+      alert('Por favor, insira ao menos uma URL válida.');
+      return;
+    }
+    const param = encodeURIComponent(JSON.stringify(urls));
+    window.location.href = `dashboard.html?links=${param}`;
+  }
+</script>
+
+</body>
+</html>
